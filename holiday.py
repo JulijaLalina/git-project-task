@@ -1,6 +1,4 @@
-while True:
-   
-    flight_price = {"london": 100,
+flight_price = {"london": 100,
            "dublin": 90,
            "paris": 80,
            "berlin": 110,
@@ -11,40 +9,57 @@ while True:
            "barcelona": 150,
            "geneva": 300}
 
-    city_flight = input("Which city are you going to? : ").lower().strip()
+cities = list(flight_price.keys())
+
+print(f"We have information for the following cities: {cities}")
+print()
+
+def plane_cost(city_flight):
+    ticket_price = flight_price[city_flight]
+    return ticket_price
+
+def hotel_cost(num_nights):
+    hotel_rate = 100
+    hotel_price = hotel_rate * num_nights
+    return hotel_price
+
+def car_rental(rental_days):
+    rate = 50
+    rental_cost = rental_days * rate
+    return rental_cost
+
+def holiday_cost(plane, hotel, car):
+    total_holiday_cost = plane + hotel + car
+    return total_holiday_cost
+
+def get_integer_input(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            return value
+        except ValueError:
+            print("Please enter a valid integer.")
+
+
+while True:
+
+    city_flight = input(f"Which city are you going to? Please choose from the list \n {cities}: ").lower().strip()
     print()
 
     while city_flight not in flight_price:
+        
         print("Sorry we do not have flight price information for this destination.")
         city_flight = input("Choose another? : ").lower().strip()
         print()
 
-    num_nights = int(input("How many nights are you staying? Please enter as a number : "))
+    num_nights = get_integer_input("How many nights are you staying? Please enter as a number : ")
     print()
-    rental_days = int(input("How many days will you be renting a car for? Please enter as a number : "))
+    rental_days = get_integer_input("How many days will you be renting a car for? Please enter as a number : ")
     print()
-
-    def plane_cost(city_flight):
-        ticket_price = flight_price[city_flight]
-        return ticket_price
-
-    def hotel_cost(num_nights):
-        hotel_rate = 100
-        hotel_price = hotel_rate * num_nights
-        return hotel_price
-
-    def car_rental(rental_days):
-        rate = 50
-        rental_cost = rental_days * rate
-        return rental_cost
 
     plane = plane_cost(city_flight)
     hotel = hotel_cost(num_nights)
     car = car_rental(rental_days)
-
-    def holiday_cost(plane, hotel, car):
-        total_holiday_cost = plane + hotel + car
-        return total_holiday_cost
 
     total_holiday_cost = holiday_cost(plane, hotel, car)
 
